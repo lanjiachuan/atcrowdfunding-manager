@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.atcrowdfunding.manager.dao.TypeDao">
+
+
+	<!--查询所有的资质条件  -->
+	<select id="queryAllCerts" resultType="cert">
+	select 
+		*
+	from 
+		t_cert
+	</select>
+	
+	<!--查询所有的类型条件  -->
+	<select id="queryAllTypes" resultType="type">
+	select 
+		*
+	from 
+		t_type
+	</select>
+	
+	<!-- 查询所有保存的绑定 -->
+	<select id="queryAllTypeCert" resultType="java.util.HashMap">
+	select
+		*
+	from
+		t_account_type_cert
+	</select>
+	
+	<!-- 插入类型和资质的绑定 -->
+	<insert id="insertAcctTypeCert">
+	insert into
+	t_account_type_cert(
+		accttype,certid
+	)values(
+		#{accttype},#{certid}
+	)
+	</insert>
+	
+	<!-- 删除类型和资质的绑定 -->
+	<delete id="deleteAcctTypeCert">
+	delete from
+		t_account_type_cert
+	where
+		accttype=#{accttype}
+	and
+		certid=#{certid}
+	</delete>
+</mapper>

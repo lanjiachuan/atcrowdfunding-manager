@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.atcrowdfunding.manager.dao.AdvDao">
+
+	<!-- 新增广告 -->
+	<insert id="inertAdv">
+	insert into 
+		t_advertisement
+	(name,iconpath,status,url,userid)
+	values
+	(#{name},#{iconpath},#{status},#{url},#{userid})
+	</insert>
+
+	<select id="advPageQuery" resultType="adv">
+		select * from t_advertisement
+		<where>
+			<if test="pageText != null">
+				and name like concat('%', #{pageText}, '%')
+			</if>
+		</where>
+		limit #{start},#{size}
+	</select>
+	<select id="advQueryCount" resultType="int">
+		select count(*) from t_advertisement
+		<where>
+			<if test="pageText != null">
+				and name like concat('%', #{pageText}, '%')
+			</if>
+		</where>
+	</select>
+
+	<select id="queryAdvById" resultType="adv">
+		select * from
+		t_advertisement
+		where
+		id = #{id}
+	</select>
+
+	<update id="updateAdv">
+		update t_advertisement set name = #{name},
+		status=#{status}
+		where id = #{id}
+	</update>
+	<insert id="insertAdv">
+		insert into t_advertisement (
+			name,iconpath,url,status,userid
+		) values
+		(
+		#{name},#{iconPath},#{url},#{status},#{userId}
+		)
+	</insert>
+	<delete id="deleteAdv">
+		delete from t_advertisement where id = #{id}
+	</delete>
+	
+	<delete id="deleteAdvs">
+		delete from t_advertisement where id in
+		<foreach collection="datas" item="adv" open="(" close=")"
+			separator=",">
+			#{adv.id}
+		</foreach>
+	</delete>
+
+
+
+
+</mapper>
